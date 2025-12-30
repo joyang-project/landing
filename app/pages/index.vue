@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const currentMenu = useState<string>('currentMenu')
 
-
 watch(currentMenu, () => {
   if (import.meta.client) {
     window.scrollTo({
@@ -13,9 +12,9 @@ watch(currentMenu, () => {
 </script>
 
 <template>
-  <main class="mx-auto max-w-[1236px] py-6 md:py-10 min-h-[60vh]">
+  <main class="w-full py-2 md:py-10 pb-4 md:pb-10 min-h-[80vh] overflow-x-hidden">
     <Transition name="fade" mode="out-in">
-      <div :key="currentMenu">
+      <div :key="currentMenu" class="content-wrapper">
         <section v-if="currentMenu === 'intro'" class="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <SectionIntro />
         </section>
@@ -29,12 +28,20 @@ watch(currentMenu, () => {
 </template>
 
 <style scoped>
+.content-wrapper {
+  width: 100%;
+}
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.25s ease;
 }
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.animate-in {
+  animation-fill-mode: both;
 }
 </style>
