@@ -96,18 +96,41 @@ const scroll = (direction: 'left' | 'right') => {
   <div class="space-y-12 md:space-y-24 py-0 md:py-8 bg-white overflow-x-hidden">
     
     <div class="max-w-[1236px] mx-auto px-4 md:px-12 mb-4">
-      <section ref="heroRef" class="relative flex flex-col-reverse md:flex-row items-center justify-between min-h-[70vh] md:min-h-[550px] pt-0 gap-4 md:gap-0">
-        <div class="space-y-5 md:space-y-8 max-w-2xl transition-all duration-1000 w-full z-10" :class="heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
+      <section 
+        ref="heroRef" 
+        class="relative flex flex-col-reverse md:flex-row items-center justify-between min-h-fit md:min-h-[550px] pt-12 md:pt-0 gap-4 md:gap-0"
+      >
+        <div 
+          class="space-y-5 md:space-y-8 max-w-2xl transition-all duration-1000 w-full z-10" 
+          :class="heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+        >
           <div class="space-y-3 md:space-y-4">
-            <h2 class="text-3xl md:text-5xl lg:text-7xl font-black leading-[1.15] tracking-tighter text-slate-900 text-left">공간의 가치를 바꾸는<br /><span class="text-[#155dfc]">조양냉난방시스템</span></h2>
-            <p class="text-sm md:text-xl text-slate-500 leading-relaxed font-medium text-left">합리적인 가격으로 최고의 전문가들과 함께<br class="hidden md:block" />더 쾌적한 환경을 직접 경험해 보세요.</p>
+            <h2 class="text-3xl md:text-5xl lg:text-7xl font-black leading-[1.15] tracking-tighter text-slate-900 text-left">
+              공간의 가치를 바꾸는<br />
+              <span class="text-[#155dfc]">조양냉난방시스템</span>
+            </h2>
+            <p class="text-sm md:text-xl text-slate-500 leading-relaxed font-medium text-left">
+              합리적인 가격으로 최고의 전문가들과 함께<br class="hidden md:block" />
+              더 쾌적한 환경을 직접 경험해 보세요.
+            </p>
           </div>
+
           <div class="flex flex-col sm:flex-row gap-2.5 md:gap-4 relative z-20">
-            <button class="flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 bg-[#155dfc] text-white rounded-xl md:rounded-2xl font-bold text-sm md:text-lg hover:bg-blue-600 transition-all shadow-lg active:scale-95 group">지금 바로 무료 상담하기</button>
-            <button @click="currentMenu = 'types'" class="flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 bg-white text-slate-600 border border-slate-200 rounded-xl md:rounded-2xl font-bold text-sm md:text-lg hover:bg-slate-50 transition-all active:scale-95 group">설치 유형 보기 <ArrowRight class="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" /></button>
+            <button 
+              class="flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 bg-[#155dfc] text-white rounded-xl md:rounded-2xl font-bold text-sm md:text-lg hover:bg-blue-600 transition-all shadow-lg active:scale-95 group"
+            >
+              지금 바로 무료 상담하기
+            </button>
+            <button 
+              @click="currentMenu = 'types'" 
+              class="flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 bg-white text-slate-600 border border-slate-200 rounded-xl md:rounded-2xl font-bold text-sm md:text-lg hover:bg-slate-50 transition-all active:scale-95 group"
+            >
+              설치 유형 보기 
+              <ArrowRight class="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
-        <div class="flex justify-center w-full md:w-auto overflow-visible relative"><AirConditioner :active="heroVisible" :progress="scrollProgress" /></div>
+
       </section>
     </div>
 
