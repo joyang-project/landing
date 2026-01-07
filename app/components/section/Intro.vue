@@ -49,22 +49,20 @@ const canScrollLeft = ref(false)
 const canScrollRight = ref(true)
 
 const cases = [
-  { id: 1, title: '강남 프리미엄 아파트', category: '가정용', img: '/images/example/01.jpg' },
-  { id: 2, title: '성수동 카페거리 상가', category: '업소용', img: '/images/example/02.jpg' },
-  { id: 3, title: '판교 IT 기업 사옥', category: '업소용', img: '/images/example/03.jpg' },
-  { id: 4, title: '한남동 단독주택', category: '가정용', img: '/images/example/04.jpg' },
-  { id: 5, title: '홍대 복합문화공간', category: '업소용', img: '/images/example/05.jpg' },
-  { id: 6, title: '송도 펜트하우스', category: '가정용', img: '/images/example/06.jpg' },
-  { id: 7, title: '가로수길 플래그십 스토어', category: '업소용', img: '/images/example/07.jpg' },
-  { id: 8, title: '제주도 리조트 단지', category: '가정용', img: '/images/example/08.jpg' },
+  { id: 1, title: '수성 범어 더블유', category: '가정용', img: '/images/example/01.jpg' },
+  { id: 2, title: '동성로 스파크 상가', category: '업소용', img: '/images/example/02.jpg' },
+  { id: 3, title: '대구 삼성 창조캠퍼스', category: '업소용', img: '/images/example/03.jpg' },
+  { id: 4, title: '만촌동 단독주택 단지', category: '가정용', img: '/images/example/04.jpg' },
+  { id: 5, title: '대봉동 웨딩거리 카페', category: '업소용', img: '/images/example/05.jpg' },
+  { id: 6, title: '월성동 월드메르디앙', category: '가정용', img: '/images/example/06.jpg' },
+  { id: 7, title: '삼덕동 플래그십 스토어', category: '업소용', img: '/images/example/07.jpg' },
+  { id: 8, title: '팔공산 전원주택 마을', category: '가정용', img: '/images/example/08.jpg' },
 ]
 
 const checkScroll = () => {
   if (!carouselRef.value) return
   const el = carouselRef.value
-  
   canScrollLeft.value = el.scrollLeft > 10
-
   const scrollEnd = el.scrollWidth - el.clientWidth
   const dummyWidth = isMobile.value ? (window.innerWidth * 0.22) : 200 
   canScrollRight.value = el.scrollLeft < (scrollEnd - dummyWidth - 10)
@@ -76,7 +74,6 @@ const scroll = (direction: 'left' | 'right') => {
   const offset = isMobile.value ? window.innerWidth * 0.82 : 508
   const move = direction === 'left' ? -offset : offset
   el.scrollBy({ left: move, behavior: 'smooth' })
-  
   setTimeout(checkScroll, 500)
 }
 
@@ -85,34 +82,46 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
 </script>
 
 <template>
-  <div class="bg-white overflow-x-hidden">
-    <div class="max-w-[1236px] mx-auto px-5 md:px-12">
-      <section ref="heroRef" class="relative flex flex-col justify-center min-h-[calc(75vh-64px)] md:min-h-[650px] pt-8 md:pt-0 pb-[64px] md:pb-0">
+  <div class="bg-white overflow-x-hidden pt-0 mt-0">
+    <section ref="heroRef" class="relative min-h-[65vh] md:min-h-[700px] flex items-center overflow-hidden w-full md:-mt-16 lg:-mt-20">
+      <div 
+        class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-[3000ms] ease-out"
+        :class="heroVisible ? 'scale-100' : 'scale-110'"
+        style="background-image: url('/images/hero-bg.png');" 
+      >
+        <div class="absolute inset-0 bg-black/50 md:bg-transparent md:bg-gradient-to-r md:from-black/90 md:via-black/60 md:to-transparent"></div>
+      </div>
+
+      <div class="relative z-10 max-w-[1236px] mx-auto px-5 md:px-12 w-full pt-20 md:pt-24">
         <div class="space-y-6 md:space-y-8 max-w-3xl transition-all duration-1000 w-full" :class="heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
           <div class="space-y-4 md:space-y-6">
-            <h2 class="text-[2.25rem] md:text-5xl lg:text-7xl font-black leading-[1.15] tracking-tighter text-slate-900">
+            <h2 class="text-[2.5rem] md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tighter text-white drop-shadow-md">
               공간의 가치를 바꾸는<br />
-              <span class="text-[#155dfc]">조양냉난방시스템</span>
+              <span class="text-[#4b89ff]">조양냉난방시스템</span>
             </h2>
-            <p class="text-base md:text-xl text-slate-500 leading-relaxed font-medium max-w-xl">
-              합리적인 가격으로 최고의 전문가들과 함께<br class="hidden md:block" />
+            <p class="text-base md:text-xl text-slate-100 leading-relaxed font-semibold max-w-xl drop-shadow-lg">
+              대구 전 지역, 합리적인 가격으로 최고의 전문가들과 함께<br class="hidden md:block" />
               더 쾌적한 환경을 직접 경험해 보세요.
             </p>
           </div>
-          <div class="flex flex-col sm:flex-row gap-3 md:gap-4">
-            <button class="px-7 py-4 bg-[#155dfc] text-white rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all shadow-lg active:scale-95">
+          <div class="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2">
+            <button class="px-8 py-4 bg-[#155dfc] text-white rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all shadow-xl active:scale-95">
               지금 바로 무료 상담하기
             </button>
-            <button @click="currentMenu = 'types'" class="flex items-center justify-center gap-2 px-7 py-4 bg-white text-slate-600 border border-slate-200 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all group">
+            <button @click="currentMenu = 'types'" class="flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/30 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all group">
               설치 유형 보기 
               <ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
 
-    <div class="max-w-[1236px] mx-auto px-5 md:px-12 pb-12 md:pb-24">
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce md:block hidden">
+        <div class="w-1 h-12 bg-gradient-to-b from-white/50 to-transparent rounded-full"></div>
+      </div>
+    </section>
+
+    <div class="max-w-[1236px] mx-auto px-5 md:px-12 py-12 md:py-20">
       <section ref="strengthsRef" class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div v-for="(item, idx) in strengths" :key="idx" 
           class="group p-6 md:p-8 rounded-[2.5rem] border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-[#155dfc] transition-all duration-700 shadow-sm"
@@ -124,13 +133,12 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
             </div>
             <h3 class="text-xl font-bold tracking-tight text-slate-900 md:mt-6">{{ item.title }}</h3>
           </div>
-
           <p class="text-slate-500 leading-relaxed text-sm md:text-base font-medium">{{ item.desc }}</p>
         </div>
       </section>
     </div>
 
-    <section class="pt-12 md:pt-24 bg-white overflow-visible">
+    <section class="pb-16 md:pb-24 bg-white overflow-visible">
       <div class="max-w-[1236px] mx-auto px-5 md:px-12 mb-10 flex items-end justify-between">
         <div class="space-y-3">
           <h2 class="text-3xl md:text-5xl font-black tracking-tighter text-slate-900 leading-tight">
@@ -161,7 +169,7 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
         </div>
 
         <div ref="carouselRef" @scroll="checkScroll" 
-          class="flex gap-4 md:gap-7 overflow-x-auto snap-x snap-mandatory scrollbar-hide pt-10 pb-16 overflow-visible"
+          class="flex gap-4 md:gap-7 overflow-x-auto snap-x snap-mandatory scrollbar-hide pt-10 pb-10 overflow-visible"
           :style="{ 
             paddingLeft: isMobile ? leftPadding : desktopPadding,
             scrollPaddingLeft: isMobile ? leftPadding : desktopPadding
@@ -174,12 +182,6 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
             <div class="absolute top-8 left-8 right-8 z-10">
               <span class="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest border border-white/20 mb-3">{{ item.category }}</span>
               <h3 class="text-2xl md:text-3xl font-bold text-white leading-tight drop-shadow-sm">{{ item.title }}</h3>
-            </div>
-            <div class="absolute bottom-8 right-8 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-              <!-- 보류 -->
-              <!-- <div class="w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center">
-                <ArrowUpRight class="w-6 h-6 text-[#155dfc]" />
-              </div> -->
             </div>
           </div>
           <div class="flex-shrink-0" :style="{ width: isMobile ? `calc(100vw - 78vw - ${leftPadding})` : `calc(100vw - 480px - ${desktopPadding})` }"></div>
