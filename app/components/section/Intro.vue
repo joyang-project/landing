@@ -100,7 +100,7 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
               <span class="text-[#4b89ff]">조양냉난방시스템</span>
             </h2>
             <p class="text-base md:text-xl text-slate-100 leading-relaxed font-semibold max-w-xl drop-shadow-lg">
-              대구 전 지역, 합리적인 가격으로 최고의 전문가들과 함께<br class="hidden md:block" />
+              합리적인 가격으로 최고의 전문가들과 함께<br class="hidden md:block" />
               더 쾌적한 환경을 직접 경험해 보세요.
             </p>
           </div>

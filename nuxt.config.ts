@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'ko',
       },
-      charset: 'utf-16',
+      charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
     },
   },
