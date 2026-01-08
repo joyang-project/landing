@@ -13,7 +13,7 @@ const currentMenu = useState<string>('currentMenu', () => 'intro')
 const navItems = [
   { id: 'intro', label: '소개', icon: Info },
   { id: 'types', label: '설치 유형', icon: LayoutGrid },
-  { id: 'example', label: '시공 사례', icon: Image },
+  // { id: 'example', label: '시공 사례', icon: Image },
   { id: 'price', label: '가격', icon: Coins },
 ]
 </script>
@@ -80,7 +80,7 @@ const navItems = [
     class="fixed bottom-0 left-0 z-50 w-full border-t bg-background/95 backdrop-blur-lg md:hidden"
     aria-label="모바일 하단 메뉴"
   >
-    <div class="grid h-16 grid-cols-4 pb-safe">
+    <div class="grid h-16 grid-flow-col auto-cols-fr pb-safe">
       <button 
         v-for="item in navItems"
         :key="item.id"
