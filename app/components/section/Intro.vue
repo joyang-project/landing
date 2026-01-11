@@ -74,14 +74,14 @@ const canScrollLeft = ref(false)
 const canScrollRight = ref(true)
 
 const cases = [
-  { id: 1, title: '수성 범어 더블유', category: '가정용', img: '/images/example/01.jpg', desc: '고급 주상복합 맞춤형 시스템 에어컨 시공' },
-  { id: 2, title: '동성로 스파크 상가', category: '업소용', img: '/images/example/02.jpg', desc: '대형 상업 시설 중앙 냉난방 시스템 구축' },
-  { id: 3, title: '대구 삼성 창조캠퍼스', category: '업소용', img: '/images/example/03.jpg', desc: '창의적 업무 공간을 위한 쾌적한 환경 조성' },
-  { id: 4, title: '만촌동 단독주택 단지', category: '가정용', img: '/images/example/04.jpg', desc: '주거 공간의 인테리어를 해치지 않는 깔끔한 마감' },
-  { id: 5, title: '대봉동 웨딩거리 카페', category: '업소용', img: '/images/example/05.jpg', desc: '감성적인 인테리어와 조화를 이루는 디자인 시공' },
-  { id: 6, title: '월성동 월드메르디앙', category: '가정용', img: '/images/example/06.jpg', desc: '오래된 아파트 시스템 에어컨 교체 및 배관 작업' },
-  { id: 7, title: '삼덕동 플래그십 스토어', category: '업소용', img: '/images/example/07.jpg', desc: '브랜드 가치를 높이는 쾌적한 쇼핑 환경 제공' },
-  { id: 8, title: '팔공산 전원주택 마을', category: '가정용', img: '/images/example/08.jpg', desc: '전원주택 특성에 맞춘 효율적인 냉난방 설계' },
+  { id: 1, title: '', category: '가정용', img: '/images/example/01.jpg', desc: '' },
+  { id: 2, title: '', category: '업소용', img: '/images/example/02.jpg', desc: '' },
+  { id: 3, title: '', category: '업소용', img: '/images/example/03.jpg', desc: '' },
+  { id: 4, title: '', category: '가정용', img: '/images/example/04.jpg', desc: '' },
+  { id: 5, title: '', category: '업소용', img: '/images/example/05.jpg', desc: '' },
+  { id: 6, title: '', category: '가정용', img: '/images/example/06.jpg', desc: '' },
+  { id: 7, title: '', category: '업소용', img: '/images/example/07.jpg', desc: '' },
+  { id: 8, title: '', category: '가정용', img: '/images/example/08.jpg', desc: '' },
 ]
 
 const checkScroll = () => {
@@ -140,10 +140,6 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
           </div>
         </div>
       </div>
-      
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce md:block hidden">
-        <div class="w-1 h-12 bg-gradient-to-b from-white/50 to-transparent rounded-full"></div>
-      </div>
     </section>
 
     <div class="max-w-[1236px] mx-auto px-5 md:px-12 py-12 md:py-20">
@@ -154,11 +150,11 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
           
           <div class="flex flex-row md:flex-col items-center md:items-start gap-4 md:gap-0 mb-4 md:mb-6">
             <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-white text-[#155dfc] flex items-center justify-center shadow-sm group-hover:bg-[#155dfc] group-hover:text-white transition-all duration-500">
-              <component :is="item.icon" class="w-6 h-6" />
+              <component :is="item.icon" class="w-6 h-6" aria-hidden="true" />
             </div>
             <h3 class="text-xl font-bold tracking-tight text-slate-900 md:mt-6">{{ item.title }}</h3>
           </div>
-          <p class="text-slate-500 leading-relaxed text-sm md:text-base font-medium">{{ item.desc }}</p>
+          <p class="text-slate-600 leading-relaxed text-sm md:text-base font-medium">{{ item.desc }}</p>
         </div>
       </section>
     </div>
@@ -169,27 +165,47 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
           <h2 class="text-3xl md:text-5xl font-black tracking-tighter text-slate-900 leading-tight">
             신뢰로 증명하는 <span class="text-[#155dfc]">시공 사례</span>
           </h2>
-          <p class="text-slate-500 font-medium text-base md:text-lg tracking-tight">카드를 클릭하여 상세 이미지를 확인해보세요</p>
+          <p class="text-slate-600 font-medium text-base md:text-lg tracking-tight">카드를 클릭하여 상세 이미지를 확인해보세요</p>
         </div>
         <div class="hidden md:flex gap-3">
-          <button @click="scroll('left')" :disabled="!canScrollLeft" class="p-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm">
-            <ChevronLeft class="w-6 h-6" />
+          <button 
+            @click="scroll('left')" 
+            :disabled="!canScrollLeft" 
+            aria-label="이전 시공 사례 보기"
+            class="p-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm"
+          >
+            <ChevronLeft class="w-6 h-6" aria-hidden="true" />
           </button>
-          <button @click="scroll('right')" :disabled="!canScrollRight" class="p-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm">
-            <ChevronRight class="w-6 h-6" />
+          <button 
+            @click="scroll('right')" 
+            :disabled="!canScrollRight" 
+            aria-label="다음 시공 사례 보기"
+            class="p-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm"
+          >
+            <ChevronRight class="w-6 h-6" aria-hidden="true" />
           </button>
         </div>
       </div>
 
       <div class="relative group/main overflow-visible -mt-10">
         <div class="md:hidden absolute inset-y-0 left-0 z-20 flex items-center pl-2 pointer-events-none">
-          <button v-if="canScrollLeft" @click="scroll('left')" class="p-3 rounded-full bg-white/80 backdrop-blur-md shadow-lg pointer-events-auto border border-white active:scale-90 transition-all">
-            <ChevronLeft class="w-5 h-5 text-slate-900" />
+          <button 
+            v-if="canScrollLeft" 
+            @click="scroll('left')" 
+            aria-label="이전 시공 사례 보기"
+            class="p-3 rounded-full bg-white/80 backdrop-blur-md shadow-lg pointer-events-auto border border-white active:scale-90 transition-all"
+          >
+            <ChevronLeft class="w-5 h-5 text-slate-900" aria-hidden="true" />
           </button>
         </div>
         <div class="md:hidden absolute inset-y-0 right-0 z-20 flex items-center pr-2 pointer-events-none">
-          <button v-if="canScrollRight" @click="scroll('right')" class="p-3 rounded-full bg-white/80 backdrop-blur-md shadow-lg pointer-events-auto border border-white active:scale-90 transition-all">
-            <ChevronRight class="w-5 h-5 text-slate-900" />
+          <button 
+            v-if="canScrollRight" 
+            @click="scroll('right')" 
+            aria-label="다음 시공 사례 보기"
+            class="p-3 rounded-full bg-white/80 backdrop-blur-md shadow-lg pointer-events-auto border border-white active:scale-90 transition-all"
+          >
+            <ChevronRight class="w-5 h-5 text-slate-900" aria-hidden="true" />
           </button>
         </div>
 
@@ -232,14 +248,24 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <div v-if="selectedCase" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div 
+          v-if="selectedCase" 
+          class="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8" 
+          aria-label="시공 사례 상세 정보"
+          role="dialog" 
+          aria-modal="true"
+        >
           
           <div @click="closeModal" class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
 
           <div class="relative w-full max-w-5xl bg-black rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 flex flex-col md:flex-row max-h-[90vh]">
             
-            <button @click="closeModal" class="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 text-white backdrop-blur-md hover:bg-white hover:text-black transition-all border border-white/10">
-              <X class="w-6 h-6" />
+            <button 
+              @click="closeModal" 
+              aria-label="상세 창 닫기"
+              class="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 text-white backdrop-blur-md hover:bg-white hover:text-black transition-all border border-white/10"
+            >
+              <X class="w-6 h-6" aria-hidden="true" />
             </button>
 
             <div class="flex-1 relative bg-[#1a1a1a] flex items-center justify-center overflow-hidden h-[50vh] md:h-auto">
@@ -248,27 +274,27 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
 
             <div class="w-full md:w-[320px] lg:w-[400px] flex-shrink-0 bg-white p-8 flex flex-col justify-center relative">
                <div class="space-y-6">
-                  <div>
-                    <span class="inline-block px-3 py-1 rounded-full bg-blue-50 text-[#155dfc] text-xs font-bold uppercase tracking-widest mb-3">
-                      {{ selectedCase.category }}
-                    </span>
-                    <h3 id="modal-title" class="text-3xl font-black text-slate-900 leading-tight">
-                      {{ selectedCase.title }}
-                    </h3>
-                  </div>
-                  
-                  <div class="w-10 h-1 bg-[#155dfc]"></div>
+                 <div>
+                   <span class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-widest mb-3">
+                     {{ selectedCase.category }}
+                   </span>
+                   <h3 class="text-3xl font-black text-slate-900 leading-tight">
+                     {{ selectedCase.title }}
+                   </h3>
+                 </div>
+                 
+                 <div class="w-10 h-1 bg-[#155dfc]"></div>
 
-                  <p class="text-slate-600 font-medium leading-relaxed">
-                    {{ selectedCase.desc || '고객의 니즈를 정확히 파악하여 최적의 냉난방 시스템을 설계하고 시공했습니다.' }}
-                  </p>
+                 <p class="text-slate-700 font-medium leading-relaxed">
+                   {{ selectedCase.desc || '고객의 니즈를 정확히 파악하여 최적의 냉난방 시스템을 설계하고 시공했습니다.' }}
+                 </p>
 
-                  <div class="pt-4 border-t border-slate-100">
-                    <button class="w-full py-4 rounded-xl bg-slate-900 text-white font-bold hover:bg-[#155dfc] transition-colors flex items-center justify-center gap-2">
-                       상담 신청하기
-                       <ArrowRight class="w-4 h-4" />
-                    </button>
-                  </div>
+                 <div class="pt-4 border-t border-slate-100">
+                   <button class="w-full py-4 rounded-xl bg-slate-900 text-white font-bold hover:bg-[#155dfc] transition-colors flex items-center justify-center gap-2">
+                      상담 신청하기
+                      <ArrowRight class="w-4 h-4" />
+                   </button>
+                 </div>
                </div>
             </div>
           </div>

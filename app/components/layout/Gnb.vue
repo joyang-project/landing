@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
-  Phone, Info, LayoutGrid, Image, Coins,
+  Phone, Info, LayoutGrid, Coins, MessageCircle 
 } from 'lucide-vue-next'
 
 const currentMenu = useState<string>('currentMenu', () => 'intro')
@@ -10,7 +9,7 @@ const currentMenu = useState<string>('currentMenu', () => 'intro')
 const navItems = [
   { id: 'intro', label: '소개', icon: Info },
   { id: 'types', label: '설치 유형', icon: LayoutGrid },
-  { id: 'price', label: '가격', icon: Coins },
+  { id: 'price', label: '시공 가격', icon: Coins },
 ]
 
 const isNavVisible = ref(true)
@@ -51,12 +50,10 @@ onUnmounted(() => {
     <div class="mx-auto max-w-[1236px] px-4 md:px-12 flex h-[60px] md:h-21 items-center justify-between">
       <div class="flex items-center gap-6 md:gap-12">
         <NuxtLink to="/" class="flex items-center gap-0.75 flex-shrink-0 transition-opacity hover:opacity-80">
-          <NuxtImg
+          <img
             src="/logo.svg"
             alt="조양냉난방시스템"
-            priority
-            placeholder
-            :modifiers="{ format: 'original' }" 
+            width="150" height="40"
             class="h-8 w-auto md:h-10"
           />
           <span class="font-black text-sm md:text-xl tracking-tighter text-slate-900">
@@ -64,19 +61,20 @@ onUnmounted(() => {
           </span>
         </NuxtLink>
 
-        <Tabs v-model="currentMenu" class="hidden lg:block">
-          <TabsList class="bg-muted/50 h-11">
-            <TabsTrigger 
-              v-for="item in navItems" 
+        <div class="hidden lg:flex bg-muted/50 h-11 rounded-lg p-1 items-center">
+            <button
+              v-for="item in navItems"
               :key="item.id"
-              :value="item.id"
-              class="px-8 text-[14px] font-semibold transition-all
-                     data-[state=active]:text-[#155dfc] data-[state=active]:shadow-none"
+              @click="currentMenu = item.id"
+              class="px-8 h-full rounded-md text-[14px] font-semibold transition-all duration-200"
+              :class="currentMenu === item.id 
+                ? 'bg-white text-[#155dfc] shadow-sm' 
+                : 'text-muted-foreground hover:text-foreground'"
+              :aria-pressed="currentMenu === item.id"
             >
               {{ item.label }}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </button>
+        </div>
       </div>
 
       <div class="flex items-center gap-3">
@@ -86,9 +84,9 @@ onUnmounted(() => {
                  md:px-5 md:h-10 md:text-sm
                  lg:px-6 lg:h-11 lg:text-base"
         >
-          <a href="https://pf.kakao.com/_xxxx" target="_blank" class="flex items-center leading-none">
-            <IconKakao class="translate-y-[0.5px] w-4 h-4 lg:w-5 lg:h-5" />
-            <span class="pt-[1px]">카카오로 실시간 문의하기</span>
+          <a href="https://pf.kakao.com/_xxxx" target="_blank" rel="noopener noreferrer" class="flex items-center leading-none">
+            <MessageCircle class="translate-y-[0.5px] w-4 h-4 lg:w-5 lg:h-5" aria-hidden="true" />
+            <span class="pt-[1px] ml-2">카카오로 실시간 문의하기</span>
           </a>
         </Button>
 
@@ -98,7 +96,7 @@ onUnmounted(() => {
           class="md:hidden border-[#155dfc] text-[#155dfc] hover:bg-[#155dfc] hover:text-white font-bold rounded-full h-10 px-4 active:scale-95 transition-all bg-transparent shadow-none border-2"
         >
           <a href="tel:010-3294-3286" class="flex items-center gap-2 leading-none">
-            <Phone class="h-4 w-4 fill-current translate-y-[0.5px]" />
+            <Phone class="h-4 w-4 fill-current translate-y-[0.5px]" aria-hidden="true" />
             <span class="pt-[1px]">빠른 전화 상담</span>
           </a>
         </Button>
@@ -117,7 +115,7 @@ onUnmounted(() => {
         :key="item.id"
         @click="currentMenu = item.id"
         class="relative flex flex-col items-center justify-center gap-1 transition-colors hover:bg-muted/50"
-        :class="currentMenu === item.id ? 'text-[#155dfc]' : 'text-muted-foreground'"
+        :class="currentMenu === item.id ? 'text-[#155dfc]' : 'text-slate-600'" 
         :aria-pressed="currentMenu === item.id"
       >
         <component 
@@ -125,6 +123,7 @@ onUnmounted(() => {
           class="h-5 w-5 transition-transform" 
           :class="{ 'scale-110': currentMenu === item.id }"
           :stroke-width="currentMenu === item.id ? 2.5 : 2" 
+          aria-hidden="true" 
         />
         <span class="text-[11px] font-medium">{{ item.label }}</span>
         
