@@ -45,10 +45,16 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            sudo systemctl restart docker
+
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/joyang:latest
             
-            docker stop joyang-app || true
-            docker rm joyang-app || true
+            docker rm -f joyang-app || true
+            
+            EXISTING_ID=$(docker ps -q --filter "publish=3000")
+            if [ ! -z "$EXISTING_ID" ]; then
+              docker rm -f $EXISTING_ID
+            fi
             
             docker run -d \
               --name joyang-app \
