@@ -130,9 +130,9 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
             </p>
           </div>
           <div class="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2">
-            <button class="px-8 py-4 bg-[#155dfc] text-white rounded-2xl font-bold text-lg hover:bg-blue-600 transition-all shadow-xl active:scale-95">
-              지금 바로 무료 상담하기
-            </button>
+            <a href="tel:010-3294-3286" class="inline-block px-8 py-4 bg-[#ffffff] text-[#1d1d1f] rounded-2xl font-bold text-lg hover:bg-[#155dfc] hover:text-[#f5f5f7] transition-all shadow-xl active:scale-95">
+              바로 무료 상담하기
+            </a>
             <button @click="currentMenu = 'types'" class="flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/30 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all group">
               설치 유형 보기 
               <ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
