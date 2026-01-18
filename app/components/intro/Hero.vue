@@ -25,10 +25,11 @@ onMounted(() => {
         src="/images/hero-bg.png" 
         format="webp"
         quality="80"
-        alt="조양냉난방시스템 메인 배경"
+        sizes="sm:640px md:1024px lg:1920px"
         fetchpriority="high"
-        class="w-full h-full object-cover transition-transform duration-[3000ms] ease-out"
-        :class="heroVisible ? 'scale-100' : 'scale-110'"
+        preload
+        alt="조양냉난방시스템 메인 배경"
+        class="w-full h-full object-cover"
       />
       <div class="absolute inset-0 bg-black/50 md:bg-transparent md:bg-gradient-to-r md:from-black/90 md:via-black/60 md:to-transparent"></div>
     </div>

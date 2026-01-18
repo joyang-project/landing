@@ -121,9 +121,10 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
             :src="item.img"
             :alt="`${item.category} 시공 사례 이미지`"
             format="webp"
-            quality="80"
+            quality="75"
+            sizes="sm:100vw md:480px"
             :loading="index <= 1 ? 'eager' : 'lazy'"
-            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            class="w-full h-full object-cover"
           />
           <div class="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/40"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
