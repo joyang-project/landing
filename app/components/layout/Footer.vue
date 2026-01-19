@@ -3,8 +3,8 @@ import { Phone, Mail, MessageCircle, PhoneCall } from 'lucide-vue-next'
 </script>
 
 <template>
-  <footer class="bg-muted/30 border-t antialiased">
-    <div class="mx-auto max-w-[1236px] px-5 md:px-12 py-12 md:py-20">
+  <footer class="bg-muted/30 border-t antialiased pb-16 lg:pb-0">
+    <div class="mx-auto max-w-[1236px] px-5 md:px-12 py-12 md:py-20 mb-safe">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
         
         <div class="order-1 md:order-2">
@@ -84,6 +84,14 @@ import { Phone, Mail, MessageCircle, PhoneCall } from 'lucide-vue-next'
 
       </div>
     </div>
-    
-    </footer>
+  </footer>
 </template>
+
+<style scoped>
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+</style>

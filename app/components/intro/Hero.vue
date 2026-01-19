@@ -22,14 +22,14 @@ onMounted(() => {
   <section ref="heroRef" class="relative min-h-[65vh] md:min-h-[700px] flex items-center overflow-hidden w-full md:-mt-16 lg:-mt-20">
     <div class="absolute inset-0 z-0 overflow-hidden">
       <NuxtImg 
-        src="/images/hero-bg.png" 
+        src="/images/hero-bg.webp" 
         format="webp"
         quality="80"
         sizes="sm:640px md:1024px lg:1920px"
         fetchpriority="high"
         preload
         alt="조양냉난방시스템 메인 배경"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover opacity-100" 
       />
       <div class="absolute inset-0 bg-black/50 md:bg-transparent md:bg-gradient-to-r md:from-black/90 md:via-black/60 md:to-transparent"></div>
     </div>

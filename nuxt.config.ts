@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  
+
   image: {
     domains: ['jo-yang.com'],
     format: ['webp', 'avif', 'png'],
@@ -35,17 +35,17 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       link: [
-        { 
-          rel: 'preload', 
-          href: '/fonts/SUIT-Variable.woff2', 
-          as: 'font', 
-          type: 'font/woff2', 
-          crossorigin: 'anonymous' 
+        {
+          rel: 'preload',
+          href: '/fonts/SUIT-Bold.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: 'anonymous'
         },
         {
           rel: 'preload',
           as: 'image',
-          href: '/images/hero-bg.png',
+          href: '/images/hero-bg.webp',
           fetchpriority: 'high'
         }
       ]
