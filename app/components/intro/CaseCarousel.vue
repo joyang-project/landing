@@ -1,36 +1,38 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick, computed } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-vue-next'
 
 interface CaseItem {
-  id: number
+  id: string | number
   title: string
-  category: string
-  img: string
-  desc: string
+  service_type: string
+  image_url: string
+  location_tag: string
+  description?: string
 }
 
 const emit = defineEmits<{
   (e: 'select-case', item: CaseItem): void
 }>()
 
+const config = useRuntimeConfig()
+const apiBase = config.public.apiBase
+
+const { data: cases } = await useFetch<CaseItem[]>(`${apiBase}/construction-cases`, {
+  key: 'construction-cases-list'
+})
+
 const carouselRef = ref<HTMLElement | null>(null)
 const canScrollLeft = ref(false)
 const canScrollRight = ref(true)
 const isMobile = ref(false)
-
 const timers = ref<ReturnType<typeof setTimeout>[]>([])
 
-const cases: CaseItem[] = [
-  { id: 1, title: '', category: '가정용', img: '/images/example/01.jpg', desc: '' },
-  { id: 2, title: '', category: '업소용', img: '/images/example/02.jpg', desc: '' },
-  { id: 3, title: '', category: '업소용', img: '/images/example/03.jpg', desc: '' },
-  { id: 4, title: '', category: '가정용', img: '/images/example/04.jpg', desc: '' },
-  { id: 5, title: '', category: '업소용', img: '/images/example/05.jpg', desc: '' },
-  { id: 6, title: '', category: '가정용', img: '/images/example/06.jpg', desc: '' },
-  { id: 7, title: '', category: '업소용', img: '/images/example/07.jpg', desc: '' },
-  { id: 8, title: '', category: '가정용', img: '/images/example/08.jpg', desc: '' },
-]
+const getImageUrl = (url: string) => {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  return `${apiBase}${url}`
+}
 
 const updateSize = () => {
   if (import.meta.client) isMobile.value = window.innerWidth < 768
@@ -58,14 +60,12 @@ onMounted(async () => {
   window.addEventListener('resize', updateSize)
   await nextTick()
   checkScroll()
-  const t1 = setTimeout(checkScroll, 100)
-  const t2 = setTimeout(checkScroll, 300)
-  const t3 = setTimeout(checkScroll, 600)
-  timers.value.push(t1, t2, t3)
+  const t = setTimeout(checkScroll, 500)
+  timers.value.push(t)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateSize)
+  if (import.meta.client) window.removeEventListener('resize', updateSize)
   timers.value.forEach(t => clearTimeout(t))
 })
 
@@ -87,18 +87,16 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
         <button 
           @click="scroll('left')" 
           :disabled="!canScrollLeft" 
-          aria-label="이전 시공 사례 보기"
           class="p-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#155dfc]"
         >
-          <ChevronLeft class="w-6 h-6" aria-hidden="true" />
+          <ChevronLeft class="w-6 h-6" />
         </button>
         <button 
           @click="scroll('right')" 
           :disabled="!canScrollRight" 
-          aria-label="다음 시공 사례 보기"
           class="p-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-20 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#155dfc]"
         >
-          <ChevronRight class="w-6 h-6" aria-hidden="true" />
+          <ChevronRight class="w-6 h-6" />
         </button>
       </div>
     </div>
@@ -115,35 +113,33 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
           :key="item.id" 
           @click="emit('select-case', item)"
           type="button"
-          :aria-label="`${item.category} 시공 사례 자세히 보기`"
-          class="flex-shrink-0 w-[78vw] md:w-[480px] aspect-[4/5] md:aspect-[3/4] rounded-[2.5rem] relative overflow-hidden snap-start cursor-pointer bg-slate-100 transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(21,93,252,0.2)] hover:z-20 group text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-[#155dfc]/30"
+          class="flex-shrink-0 w-[78vw] md:w-[480px] aspect-[4/5] md:aspect-[3/4] rounded-[2.5rem] relative overflow-hidden snap-start cursor-pointer bg-slate-100 transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(21,93,252,0.2)] hover:z-20 group text-left"
         >
           <NuxtImg 
-            :src="item.img"
-            :alt="`${item.category} 설치 완료 현장 사진`"
+            :src="getImageUrl(item.image_url)"
+            :alt="`${item.title} 설치 완료 현장`"
             format="webp"
-            quality="70"
+            quality="80"
             width="480"
             height="640"
-            sizes="xs:78vw md:480px"
-            :loading="index <= 1 ? 'eager' : 'lazy'" 
-            :fetchpriority="index === 0 ? 'high' : 'auto'"
             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            :loading="index <= 1 ? 'eager' : 'lazy'" 
           />
 
-          <div class="absolute inset-0 bg-black/60 transition-opacity duration-500 group-hover:opacity-0"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500"></div>
+          <div class="absolute inset-0 bg-black/40 transition-opacity duration-500 group-hover:opacity-10"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 
           <div class="absolute top-8 left-8 right-8 z-10 transition-all duration-500 group-hover:opacity-0 group-hover:-translate-y-8">
             <span class="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest border border-white/20 mb-3">
-              {{ item.category }}
+              {{ item.service_type }}
             </span>
             <h3 class="text-2xl md:text-3xl font-bold text-white leading-tight drop-shadow-md">
-              {{ item.title || item.category + ' 시공사례 ' + item.id }}
+              {{ item.title }}
             </h3>
+            <p class="text-white/70 text-sm mt-2 font-medium">{{ item.location_tag }}</p>
           </div>
 
-          <div class="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-[#155dfc] flex items-center justify-center text-white shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0" aria-hidden="true">
+          <div class="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-[#155dfc] flex items-center justify-center text-white shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
              <ArrowUpRight class="w-7 h-7" />
           </div>
         </button>
@@ -157,8 +153,5 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
 <style scoped>
 .scrollbar-hide::-webkit-scrollbar { display: none; width: 0 !important; height: 0 !important; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-button {
-  will-change: transform;
-}
+button { will-change: transform; }
 </style>

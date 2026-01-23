@@ -101,5 +101,10 @@ export default defineNuxtConfig({
       '/_nuxt/**': { headers: { 'Cache-Control': 'public, max-age=31536000, immutable' } },
       '/_ipx/**': { headers: { 'Cache-Control': 'public, max-age=31536000, immutable' } },
     }
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:4000'
+    }
   }
 })
