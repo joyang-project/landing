@@ -15,12 +15,12 @@ interface Product {
 }
 
 const products: Product[] = [
-  { id: 1, main: '가정용', name: '가정용 벽걸이형', brand: '테스트', image: '🏠' },
-  { id: 2, main: '가정용', name: '프리미엄 2in1', brand: '테스트', image: '🏡' },
-  { id: 3, main: '업소용', sub: 'stand', name: '대형', brand: '테스트', image: '🏢' },
-  { id: 4, main: '업소용', sub: 'stand', name: '슬림형', brand: '테스트', image: '🏬' },
-  { id: 5, main: '업소용', sub: 'ceiling', name: '4Way', brand: '테스트', image: '🏗️' },
-  { id: 6, main: '업소용', sub: 'ceiling', name: '1Way', brand: '테스트', image: '☁️' },
+  { id: 1, main: '가정용', name: '가정용 벽걸이형', brand: '삼성/LG', image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?q=80&w=800&auto=format&fit=crop' },
+  { id: 2, main: '가정용', name: '프리미엄 2in1', brand: '삼성/LG', image: 'https://images.unsplash.com/photo-1585338107529-13afc5f02586?q=80&w=800&auto=format&fit=crop' },
+  { id: 3, main: '업소용', sub: 'stand', name: '대형 스탠드', brand: '캐리어', image: 'https://images.unsplash.com/photo-1590756254933-2873d72a83b6?q=80&w=800&auto=format&fit=crop' },
+  { id: 4, main: '업소용', sub: 'stand', name: '슬림형 스탠드', brand: '캐리어', image: 'https://images.unsplash.com/photo-1614633833026-07205c9d4e0e?q=80&w=800&auto=format&fit=crop' },
+  { id: 5, main: '업소용', sub: 'ceiling', name: '시스템 4Way', brand: 'LG/삼성', image: 'https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=80&w=800&auto=format&fit=crop' },
+  { id: 6, main: '업소용', sub: 'ceiling', name: '시스템 1Way', brand: 'LG/삼성', image: 'https://images.unsplash.com/photo-1565151443435-08e709088647?q=80&w=800&auto=format&fit=crop' },
 ];
 
 const contentMap = {
@@ -160,20 +160,29 @@ onMounted(() => { isVisible.value = true; });
 
         <div :key="`list-${selectedMain}-${selectedSub}`"
           class="bg-slate-50/50 border border-slate-100 rounded-[2rem] p-6 md:p-10 animate-in fade-in slide-in-from-bottom-4">
-          <h4 class="text-base md:text-xl font-black flex items-center gap-2.5 mb-6 md:mb-8 text-slate-900 tracking-tight">
+          <h4 class="text-base md:text-xl font-black flex items-center gap-2.5 mb-8 text-slate-900 tracking-tight">
             <ShoppingCart class="w-5 h-5 md:w-6 md:h-6 text-[#155dfc]" /> 
             추천 라인업
           </h4>
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div v-for="product in filteredProducts" :key="product.id" 
-              class="flex items-center gap-4 p-5 rounded-2xl border border-white bg-white shadow-sm hover:shadow-md hover:border-blue-100 transition-all group cursor-default">
-              <div class="w-16 h-16 bg-slate-50 rounded-xl flex items-center justify-center text-3xl shrink-0 group-hover:scale-110 transition-transform">
-                {{ product.image }}
+              class="group flex flex-col bg-white rounded-[1.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              
+              <div class="relative aspect-square overflow-hidden bg-slate-200">
+                <img 
+                  :src="product.image" 
+                  :alt="product.name" 
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
-              <div class="flex-1 min-w-0">
-                <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-black rounded mb-1.5 uppercase tracking-wider">{{ product.brand }}</span>
-                <div class="font-bold text-slate-900 truncate text-base md:text-lg tracking-tight group-hover:text-[#155dfc] transition-colors">{{ product.name }}</div>
+
+              <div class="p-6 text-center">
+                <h5 class="font-black text-lg md:text-xl text-slate-900 leading-tight group-hover:text-[#155dfc] transition-colors">
+                  {{ product.name }}
+                </h5>
+                <p class="mt-2 text-slate-400 text-sm font-medium">상세 모델 상담 가능</p>
               </div>
             </div>
           </div>
@@ -200,6 +209,5 @@ onMounted(() => { isVisible.value = true; });
 .zoom-in-95 { animation-name: zoom-in-95; }
 .slide-in-from-bottom-4 { animation-name: slide-in-bottom; }
 
-.tracking-tighter { letter-spacing: -0.05em; }
 .tracking-tight { letter-spacing: -0.02em; }
 </style>
