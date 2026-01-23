@@ -17,6 +17,7 @@ const emit = defineEmits<{
 
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase
+const viewKey = ref(0)
 
 const { data: cases } = await useFetch<CaseItem[]>(`${apiBase}/construction-cases`, {
   key: 'construction-cases-list'
@@ -31,7 +32,7 @@ const timers = ref<ReturnType<typeof setTimeout>[]>([])
 const getImageUrl = (url: string) => {
   if (!url) return ''
   if (url.startsWith('http')) return url
-  return `${apiBase}${url}`
+  return `${apiBase}${url}?v=${viewKey.value}`
 }
 
 const updateSize = () => {
@@ -55,9 +56,19 @@ const scroll = (direction: 'left' | 'right') => {
   el.scrollBy({ left: move, behavior: 'smooth' })
 }
 
+const handleVisibilityChange = () => {
+  if (import.meta.client && document.visibilityState === 'visible') {
+    viewKey.value++
+    nextTick(() => {
+      checkScroll()
+    })
+  }
+}
+
 onMounted(async () => {
   updateSize()
   window.addEventListener('resize', updateSize)
+  document.addEventListener('visibilitychange', handleVisibilityChange)
   await nextTick()
   checkScroll()
   const t = setTimeout(checkScroll, 500)
@@ -65,7 +76,10 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  if (import.meta.client) window.removeEventListener('resize', updateSize)
+  if (import.meta.client) {
+    window.removeEventListener('resize', updateSize)
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }
   timers.value.forEach(t => clearTimeout(t))
 })
 
@@ -74,7 +88,7 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
 </script>
 
 <template>
-  <section class="pb-16 md:pb-24 bg-white overflow-hidden" aria-labelledby="case-study-title">
+  <section :key="viewKey" class="pb-16 md:pb-24 bg-white overflow-hidden" aria-labelledby="case-study-title">
     <div class="max-w-[1236px] mx-auto px-5 md:px-12 mb-10 flex items-end justify-between relative z-30">
       <div class="space-y-3">
         <h2 id="case-study-title" class="text-3xl md:text-5xl font-black tracking-tighter text-slate-900 leading-tight">
@@ -120,15 +134,12 @@ const desktopPadding = 'max(3rem, calc((100vw - 1236px) / 2 + 3rem))'
           class="flex-shrink-0 w-[78vw] md:w-[480px] aspect-[4/5] md:aspect-[3/4] rounded-[2.5rem] relative overflow-hidden snap-start cursor-pointer bg-slate-100 transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(21,93,252,0.2)] hover:z-20 group text-left"
           :aria-label="`${item.title} 시공 사례 상세 보기 (${item.service_type}, ${item.location_tag})`"
         >
-          <NuxtImg 
+          <img 
             :src="getImageUrl(item.image_url)"
             :alt="`${item.title} 설치 완료 현장 사진`"
-            format="webp"
-            quality="80"
-            width="480"
-            height="640"
+            loading="lazy"
+            decoding="async"
             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-            :loading="index <= 1 ? 'eager' : 'lazy'" 
           />
 
           <div class="absolute inset-0 bg-black/40 transition-opacity duration-500 group-hover:opacity-10" aria-hidden="true"></div>
